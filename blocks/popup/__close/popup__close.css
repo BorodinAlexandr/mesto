@@ -1,0 +1,18 @@
+.popup__close {
+  cursor: pointer;
+  border: none;
+  position: absolute;
+  top: -43px;
+  right: -43px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.5s;
+}
+.popup__close:hover {
+  opacity: 0.6;
+}
+@media (max-width: 730px) {
+  .popup__close {
+    top: -35px;
+    right: -5px;
+  }
+}
