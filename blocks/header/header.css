@@ -5,7 +5,7 @@
     content: "";
     bottom: 0;
     left: 0;
-    width: 100%; 
+    width: 100%;
     padding-right: 100%;
     border-bottom: 1px solid rgba(84,84,84, 0.7);
 }
@@ -23,6 +23,6 @@
     border-bottom: 1px solid rgba(84,84,84, 0.7);
   }
   .header::after {
-    border-bottom: none;  
+    border-bottom: none;
   }
 }
