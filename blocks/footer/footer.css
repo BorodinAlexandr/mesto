@@ -1,7 +1,5 @@
 .footer {
   padding: 66px 200px 60px;
-  display: flex;
-  justify-content: space-between;
 }
 
 @media (max-width: 1279px) {
@@ -12,8 +10,6 @@
 }
 @media (max-width: 730px) {
   .footer {
-    flex-direction: column;
     padding: 48px 19px 36px;
-    justify-content: space-between;
   }
 }

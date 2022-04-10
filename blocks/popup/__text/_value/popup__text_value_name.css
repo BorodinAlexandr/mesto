@@ -1,0 +1,9 @@
+.popup__text_value_name {
+  margin-top: 54px;
+}
+
+@media (max-width: 730px) {
+  .popup__text_value_name {
+    margin-top: 75px;
+  }
+}
