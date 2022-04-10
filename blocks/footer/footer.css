@@ -12,7 +12,6 @@
 }
 @media (max-width: 730px) {
   .footer {
-    height: 75px;
     flex-direction: column;
     padding: 48px 19px 36px;
     justify-content: space-between;

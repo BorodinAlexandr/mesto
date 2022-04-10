@@ -1,5 +1,5 @@
-.popup__descr {
-  margin: 30px auto 0;
+.popup__text {
+  margin: 54px auto 0;
   width: 358px;
   height: 27px;
   font-size: 14px;
@@ -8,7 +8,7 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 @media (max-width: 730px) {
-  .popup__descr {
+  .popup__text {
     width: 238px;
   }
 }
