@@ -1,7 +1,7 @@
 .places__like {
   cursor: pointer;
   margin-top: 31px;
-  background: url(../../../img/like.svg) center center/cover no-repeat;
+  background: url(../../../images/like.svg) center center/cover no-repeat;
   width: 22px;
   height: 19px;
   margin-left: auto;
