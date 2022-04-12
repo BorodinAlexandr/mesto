@@ -25,7 +25,5 @@
 @import "../blocks/popup/__close/popup__close.css";
 @import "../blocks/popup/__title/popup__title.css";
 @import "../blocks/popup/__text/popup__text.css";
-@import "../blocks/popup/__text/_value/popup__text_value_name.css";
-@import "../blocks/popup/__text/_value/popup__text_value_descr.css";
 @import "../blocks/popup/__button/popup__button.css";
 @import "../blocks/popup/_opened/popup_opened.css";
