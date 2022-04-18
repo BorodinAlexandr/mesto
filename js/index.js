@@ -99,21 +99,16 @@ function formSubmitHandler(e) {
 
 function addCards(e) {
   e.preventDefault();
-  let newTitle = titleInput.value,
-    newLink = linkInput.value;
+  const cardTemplate = document.querySelector('.card-template').content;
+  const cardElement = cardTemplate.querySelector('.places__place').cloneNode(true);
+  const cardLink = linkInput.value;
+  const cardName = titleInput.value;
 
-  cardsParent.insertAdjacentHTML(
-    'afterbegin',
-    `
-    <div class="places__place">
-    <button type="button" class="places__delete"></button>
-    <img class="places__img" src="${newLink}" alt="${newTitle}" />
-    <div class="places__text">
-      <h3 class="places__name">${newTitle}</h3>
-      <button type="button" class="places__like"></button>
-    </div>
-    `
-  );
+  cardElement.querySelector('.places__img').setAttribute('src', cardLink);
+  cardElement.querySelector('.places__img').setAttribute('alt', cardName);
+  cardElement.querySelector('.places__name').textContent = titleInput.value;
+
+  cardsParent.prepend(cardElement);
   closePopup();
 }
 
