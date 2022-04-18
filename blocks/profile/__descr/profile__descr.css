@@ -6,7 +6,6 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 300px;
-  align-self: center;
 }
 @media (max-width: 730px) {
   .profile__descr {
