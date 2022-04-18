@@ -1,7 +1,7 @@
 const openProfileBtn = document.querySelector('.profile__edit'),
-  cardsOpenBtn = document.querySelector('.profile__button'),
-  popup = document.querySelectorAll('.popup'),
-  closeBtn = document.querySelectorAll('.popup__close'),
+  cardOpenBtn = document.querySelector('.profile__button'),
+  popups = document.querySelectorAll('.popup'),
+  closeBtns = document.querySelectorAll('.popup__close'),
   popupProfile = document.querySelector('.popup_edit_profile'),
   popupCards = document.querySelector('.popup_edit_cards'),
   popupImg = document.querySelector('.popup_img'),
@@ -80,7 +80,7 @@ function openImgPopup() {
 }
 
 function closePopup() {
-  popup.forEach((item) => {
+  popups.forEach((item) => {
     item.classList.remove('popup_opened');
   });
 }
@@ -119,9 +119,9 @@ function addCards(e) {
 
 openProfileBtn.addEventListener('click', openProfilePopup);
 
-cardsOpenBtn.addEventListener('click', openCardsPopup);
+cardOpenBtn.addEventListener('click', openCardsPopup);
 
-closeBtn.forEach((item) => {
+closeBtns.forEach((item) => {
   item.addEventListener('click', closePopup);
 });
 
