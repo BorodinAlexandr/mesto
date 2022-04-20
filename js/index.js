@@ -19,74 +19,77 @@ const buttonOpenProfile = document.querySelector('.profile__edit'),
   cardsLikeButton = cardsParent.querySelectorAll('.places__like'),
   cardTemplate = document.querySelector('.card-template').content;
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
+function setImgAttribute(selector, classSelector, attribute, value) {
+  selector.querySelector(classSelector).setAttribute(attribute, value);
+}
 
-cardsParent.innerHTML = '';
+function setPopupImageAttribute(selector, attribute, value) {
+  selector.setAttribute(attribute, value);
+}
 
 function render(place) {
-  cardsParent.innerHTML += `
-    <div class="places__place">
-    <button type="button" class="places__delete"></button>
-    <img class="places__img" src="${place.link}" alt="${place.name}" />
-    <div class="places__text">
-      <h3 class="places__name">${place.name}</h3>
-      <button type="button" class="places__like"></button>
-    </div>
-`;
+  const cardElement = cardTemplate
+    .querySelector('.places__place')
+    .cloneNode(true);
+  setImgAttribute(cardElement, '.places__img', 'src', place.link);
+  setImgAttribute(cardElement, '.places__img', 'alt', place.name);
+  cardElement.querySelector('.places__name').textContent = place.name;
+
+  cardsParent.prepend(cardElement);
+
+  cardElement.addEventListener('click', (e) => {
+    if (e.target.classList.contains('places__like')) {
+      e.target.classList.toggle('places__like_active');
+    }
+  });
+
+  cardElement.addEventListener('click', (e) => {
+    if (e.target.classList.contains('places__delete')) {
+      e.target.parentElement.remove();
+    }
+  });
+
+  cardElement.addEventListener('click', (e) => {
+    if (e.target.classList.contains('places__img')) {
+      const link = e.target.getAttribute('src'),
+        descr = e.target.getAttribute('alt');
+
+      setPopupImageAttribute(popupImageElement, 'src', link);
+      setPopupImageAttribute(popupImageElement, 'alt', descr);
+      popupImageDescription.textContent = descr;
+
+      openPopup(popupImage);
+    }
+  });
 }
 
 initialCards.forEach((item) => {
   render(item);
 });
 
-function openProfilePopup() {
-  popupProfile.classList.add('popup_opened');
-  nameInput.value = personName.textContent;
-  descrInput.value = description.textContent;
-}
-
-function openCardsPopup() {
-  popupCards.classList.add('popup_opened');
+function clearForm() {
   titleInput.value = '';
   linkInput.value = '';
 }
 
-function openImgPopup() {
-  popupImage.classList.add('popup_opened');
+function fillForm() {
+  nameInput.value = personName.textContent;
+  descrInput.value = description.textContent;
+}
+function openPopup(popupClass) {
+  popupClass.classList.add('popup_opened');
 }
 
-function closePopup() {
-  popups.forEach((item) => {
-    item.classList.remove('popup_opened');
-  });
+function openCardsPopup() {
+  popupCards.classList.add('popup_opened');
+  clearForm();
 }
 
-function formSubmitHandler(e) {
+function closePopup(popupSelector) {
+  popupSelector.classList.remove('popup_opened');
+}
+
+function profileFormSubmitHandler(e) {
   e.preventDefault();
 
   const newName = nameInput.value,
@@ -95,57 +98,48 @@ function formSubmitHandler(e) {
   personName.textContent = newName;
   description.textContent = newDescr;
 
-  closePopup();
+  closePopup(popupProfile);
 }
 
 function addCards(e) {
   e.preventDefault();
-  const cardElement = cardTemplate
-    .querySelector('.places__place')
-    .cloneNode(true);
+
   const cardLink = linkInput.value;
   const cardName = titleInput.value;
+  const newCard = [
+    {
+      name: cardName,
+      link: cardLink,
+    },
+  ];
 
-  cardElement.querySelector('.places__img').setAttribute('src', cardLink);
-  cardElement.querySelector('.places__img').setAttribute('alt', cardName);
-  cardElement.querySelector('.places__name').textContent = titleInput.value;
+  render(newCard[0]);
 
-  cardsParent.prepend(cardElement);
-  closePopup();
+  closePopup(popupCards);
 }
 
-buttonOpenProfile.addEventListener('click', openProfilePopup);
-
-cardOpenButton.addEventListener('click', openCardsPopup);
-
-buttonsClose.forEach((item) => {
-  item.addEventListener('click', closePopup);
+buttonOpenProfile.addEventListener('click', () => {
+  openPopup(popupProfile);
+  fillForm();
 });
 
-formElement.addEventListener('submit', formSubmitHandler);
+cardOpenButton.addEventListener('click', () => {
+  openPopup(popupCards);
+  fillForm();
+});
+
+// buttonsClose.forEach((item) => {
+//   item.addEventListener('click', () => closePopup(item));
+// });
+
+popups.forEach((item) => {
+  item.addEventListener('click', (e) => {
+    if (e.target.classList.contains('popup__close')) {
+      closePopup(item);
+    }
+  });
+});
+
+formElement.addEventListener('submit', profileFormSubmitHandler);
 
 formAddCards.addEventListener('submit', addCards);
-
-cardsParent.addEventListener('click', (e) => {
-  if (e.target.classList.contains('places__like')) {
-    e.target.classList.toggle('places__like_active');
-  }
-});
-
-cardsParent.addEventListener('click', (e) => {
-  if (e.target.classList.contains('places__delete')) {
-    e.target.parentElement.remove();
-  }
-});
-
-cardsParent.addEventListener('click', (e) => {
-  if (e.target.classList.contains('places__img')) {
-    const link = e.target.getAttribute('src'),
-      descr = e.target.getAttribute('alt');
-
-    popupImageElement.setAttribute('src', link);
-    popupImageDescription.textContent = descr;
-
-    openImgPopup();
-  }
-});
