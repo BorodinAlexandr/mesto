@@ -125,7 +125,7 @@ buttonOpenProfile.addEventListener('click', () => {
 
 cardOpenButton.addEventListener('click', () => {
   openPopup(popupCards);
-  fillForm();
+  clearForm();
 });
 
 // buttonsClose.forEach((item) => {
