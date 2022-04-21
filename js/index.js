@@ -10,90 +10,77 @@ const buttonOpenProfile = document.querySelector('.profile__edit'),
   formElement = document.querySelector('.popup__form_edit_profile'),
   formAddCards = document.querySelector('.popup__form_add_cards'),
   nameInput = document.querySelector('.popup__text_value_name'),
-  descrInput = document.querySelector('.popup__text_value_descr'),
+  descriptionInput = document.querySelector('.popup__text_value_descr'),
   titleInput = document.querySelector('.popup__text_value_title'),
   linkInput = document.querySelector('.popup__text_value_link'),
   personName = document.querySelector('.profile__name'),
   description = document.querySelector('.profile__descr'),
   cardsParent = document.querySelector('.places'),
-  cardsLikeButton = cardsParent.querySelectorAll('.places__like'),
   cardTemplate = document.querySelector('.card-template').content;
 
-function setImgAttribute(selector, classSelector, attribute, value) {
-  selector.querySelector(classSelector).setAttribute(attribute, value);
-}
-
-function setPopupImageAttribute(selector, attribute, value) {
-  selector.setAttribute(attribute, value);
-}
-
-function render(place) {
+function createCard(place) {
   const cardElement = cardTemplate
     .querySelector('.places__place')
     .cloneNode(true);
-  setImgAttribute(cardElement, '.places__img', 'src', place.link);
-  setImgAttribute(cardElement, '.places__img', 'alt', place.name);
+  const cardImage = cardElement.querySelector('.places__img'),
+    buttonLike = cardElement.querySelector('.places__like'),
+    buttonDelete = cardElement.querySelector('.places__delete');
+  cardImage.alt = place.name;
+  cardImage.src = place.link;
   cardElement.querySelector('.places__name').textContent = place.name;
 
-  cardsParent.prepend(cardElement);
-
-  cardElement.addEventListener('click', (e) => {
-    if (e.target.classList.contains('places__like')) {
-      e.target.classList.toggle('places__like_active');
-    }
+  buttonLike.addEventListener('click', () => {
+    buttonLike.classList.toggle('places__like_active');
   });
 
-  cardElement.addEventListener('click', (e) => {
-    if (e.target.classList.contains('places__delete')) {
-      e.target.parentElement.remove();
-    }
+  buttonDelete.addEventListener('click', () => {
+    buttonDelete.closest('.places__place').remove();
   });
 
-  cardElement.addEventListener('click', (e) => {
-    if (e.target.classList.contains('places__img')) {
-      const link = e.target.getAttribute('src'),
-        descr = e.target.getAttribute('alt');
+  cardImage.addEventListener('click', () => {
+    const link = cardImage.getAttribute('src'),
+      description = cardImage.getAttribute('alt');
 
-      setPopupImageAttribute(popupImageElement, 'src', link);
-      setPopupImageAttribute(popupImageElement, 'alt', descr);
-      popupImageDescription.textContent = descr;
+    popupImageElement.src = link;
+    popupImageElement.alt = description;
+    popupImageDescription.textContent = description;
 
-      openPopup(popupImage);
-    }
+    openPopup(popupImage);
   });
+
+  return cardElement;
+}
+
+function renderCard(parentSelector, card) {
+  parentSelector.prepend(card);
 }
 
 initialCards.forEach((item) => {
-  render(item);
+  renderCard(cardsParent, createCard(item));
 });
 
-function clearForm() {
+function clearAddCardForm() {
   titleInput.value = '';
   linkInput.value = '';
 }
 
-function fillForm() {
+function fillProfileEditForm() {
   nameInput.value = personName.textContent;
-  descrInput.value = description.textContent;
+  descriptionInput.value = description.textContent;
 }
-function openPopup(popupClass) {
-  popupClass.classList.add('popup_opened');
-}
-
-function openCardsPopup() {
-  popupCards.classList.add('popup_opened');
-  clearForm();
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
 
-function closePopup(popupSelector) {
-  popupSelector.classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 function profileFormSubmitHandler(e) {
   e.preventDefault();
 
   const newName = nameInput.value,
-    newDescr = descrInput.value;
+    newDescr = descriptionInput.value;
 
   personName.textContent = newName;
   description.textContent = newDescr;
@@ -104,39 +91,33 @@ function profileFormSubmitHandler(e) {
 function addCards(e) {
   e.preventDefault();
 
-  const cardLink = linkInput.value;
-  const cardName = titleInput.value;
-  const newCard = [
-    {
-      name: cardName,
-      link: cardLink,
-    },
-  ];
+  const link = linkInput.value,
+    name = titleInput.value;
 
-  render(newCard[0]);
+  const card = {
+    name: name,
+    link: link,
+  };
 
+  renderCard(cardsParent, createCard(card));
   closePopup(popupCards);
 }
 
 buttonOpenProfile.addEventListener('click', () => {
   openPopup(popupProfile);
-  fillForm();
+  fillProfileEditForm();
 });
 
 cardOpenButton.addEventListener('click', () => {
   openPopup(popupCards);
-  clearForm();
+  clearAddCardForm();
 });
 
-// buttonsClose.forEach((item) => {
-//   item.addEventListener('click', () => closePopup(item));
-// });
-
 popups.forEach((item) => {
-  item.addEventListener('click', (e) => {
-    if (e.target.classList.contains('popup__close')) {
-      closePopup(item);
-    }
+  const buttonClose = item.querySelector('.popup__close');
+
+  buttonClose.addEventListener('click', () => {
+    closePopup(item);
   });
 });
 
