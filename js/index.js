@@ -62,6 +62,7 @@ initialCards.forEach((item) => {
 function clearAddCardForm() {
   titleInput.value = '';
   linkInput.value = '';
+  enableValidation('.popup__form');
 }
 
 function fillProfileEditForm() {
