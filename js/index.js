@@ -68,12 +68,25 @@ function fillProfileEditForm() {
   nameInput.value = personName.textContent;
   descriptionInput.value = description.textContent;
 }
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keyup', closePopupByEscape);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keyup', closePopupByEscape);
+}
+
+function closePopupByEscape(e) {
+  if (e.code === 'Escape') {
+    popups.forEach((popup) => {
+      if (popup.classList.contains('popup_opened')) {
+        closePopup(popup);
+      }
+    });
+  }
 }
 
 function profileFormSubmitHandler(e) {
@@ -113,11 +126,17 @@ cardOpenButton.addEventListener('click', () => {
   clearAddCardForm();
 });
 
-popups.forEach((item) => {
-  const buttonClose = item.querySelector('.popup__close');
+popups.forEach((popup) => {
+  const buttonClose = popup.querySelector('.popup__close');
 
   buttonClose.addEventListener('click', () => {
-    closePopup(item);
+    closePopup(popup);
+  });
+
+  popup.addEventListener('click', (e) => {
+    if (e.target.classList.contains('popup')) {
+      closePopup(popup);
+    }
   });
 });
 

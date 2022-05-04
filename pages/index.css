@@ -32,4 +32,11 @@
 @import "../blocks/popup/__img-container/popup__img-container.css";
 @import "../blocks/popup/__image/popup__image.css";
 @import "../blocks/popup/__img-descr/popup__img-descr.css";
+@import "../blocks/popup/__fieldset/popup__fieldset.css";
+@import "../blocks/popup/__button/_inactive/popup__button_inactive.css";
+@import "../blocks/popup/__text-error/popup__text-error.css";
+@import "../blocks/popup/__text-error/_active/popup__text-error_active.css";
+@import "../blocks/popup/__text/_type-error/popup__text_type-error.css";
+
+
 
