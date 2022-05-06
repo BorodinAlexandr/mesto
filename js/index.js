@@ -62,7 +62,6 @@ initialCards.forEach((item) => {
 function clearAddCardForm() {
   titleInput.value = '';
   linkInput.value = '';
-  enableValidation('.popup__form');
 }
 
 function fillProfileEditForm() {
@@ -72,6 +71,17 @@ function fillProfileEditForm() {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+
+  const formElement = popup.querySelector('.popup__form');
+  const inputs = popup.querySelectorAll('.popup__text');
+
+  inputs.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, {
+      inputErrorClass: 'popup__text_type-error',
+      errorClass: 'popup__text-error_active',
+    });
+  });
+
   document.addEventListener('keyup', closePopupByEscape);
 }
 
@@ -125,6 +135,10 @@ buttonOpenProfile.addEventListener('click', () => {
 cardOpenButton.addEventListener('click', () => {
   openPopup(popupCards);
   clearAddCardForm();
+
+  const buttonElement = popupCards.querySelector('.popup__button');
+
+  disableButton(buttonElement, 'popup__button_inactive');
 });
 
 popups.forEach((popup) => {
