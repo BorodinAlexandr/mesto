@@ -1,10 +1,11 @@
-import openPopup from './index.js';
+import { openPopup, popupImage } from './index.js';
 
 class Card {
   constructor(data, templateSelector) {
     this._src = data.link;
     this._alt = data.name;
     this._templateSelector = templateSelector;
+    this.popupImage = popupImage;
   }
 
   _likeCard() {
@@ -18,7 +19,6 @@ class Card {
   _openImagePopup() {
     this.popupImageElement = document.querySelector('.popup__image');
     this.popupImageDescription = document.querySelector('.popup__img-descr');
-    this.popupImage = document.querySelector('.popup_img');
 
     this.popupImageElement.src = this._src;
     this.popupImageElement.alt = this._alt;
@@ -45,10 +45,8 @@ class Card {
   }
 
   _createCard() {
-    this.cardElement = document
-      .querySelector('.card-template')
-      .content.querySelector(this._templateSelector)
-      .cloneNode(true);
+    this.cardTemplate = document.querySelector('.card-template').content;
+    this.cardElement = this.cardTemplate.querySelector(this._templateSelector).cloneNode(true);
     this.cardImage = this.cardElement.querySelector('.places__img');
 
     this.cardImage.alt = this._alt;
@@ -56,7 +54,7 @@ class Card {
     this.cardElement.querySelector('.places__name').textContent = this._alt;
   }
 
-  renderCard() {
+  getCard() {
     this._createCard();
 
     this._setEventListeners();
