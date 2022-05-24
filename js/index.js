@@ -24,15 +24,12 @@ const buttonOpenProfile = document.querySelector('.profile__edit'),
   buttonElement = popupCards.querySelector('.popup__button');
 
 const validator = new FormValidator({
-  formSelector: '.popup__form',
   inputSelector: '.popup__text',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_inactive',
   inputErrorClass: 'popup__text_type-error',
   errorClass: 'popup__text-error_active',
-});
-
-validator.enableValidation();
+}, '.popup__form');
 
 function renderCard(parentSelector, card) {
   parentSelector.prepend(card);
@@ -115,11 +112,13 @@ function addCards(e) {
 buttonOpenProfile.addEventListener('click', () => {
   openPopup(popupProfile);
   fillProfileEditForm();
+  validator.enableValidation();
 });
 
 cardOpenButton.addEventListener('click', () => {
   openPopup(popupCards);
   clearAddCardForm();
+  validator.enableValidation();
 
   validator.disableButton(buttonElement, 'popup__button_inactive');
 });
