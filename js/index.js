@@ -5,12 +5,8 @@ import FormValidator from './FormValidator.js';
 const buttonOpenProfile = document.querySelector('.profile__edit'),
   cardOpenButton = document.querySelector('.profile__button'),
   popups = document.querySelectorAll('.popup'),
-  buttonsClose = document.querySelectorAll('.popup__close'),
   popupProfile = document.querySelector('.popup_edit_profile'),
   popupCards = document.querySelector('.popup_edit_cards'),
-  popupImage = document.querySelector('.popup_img'),
-  popupImageElement = document.querySelector('.popup__image'),
-  popupImageDescription = document.querySelector('.popup__img-descr'),
   formElement = document.querySelector('.popup__form_edit_profile'),
   formAddCards = document.querySelector('.popup__form_add_cards'),
   nameInput = document.querySelector('.popup__text_value_name'),
@@ -20,7 +16,6 @@ const buttonOpenProfile = document.querySelector('.profile__edit'),
   personName = document.querySelector('.profile__name'),
   description = document.querySelector('.profile__descr'),
   cardsParent = document.querySelector('.places'),
-  cardTemplate = document.querySelector('.card-template').content,
   buttonElement = popupCards.querySelector('.popup__button');
 
 const validator = new FormValidator({
