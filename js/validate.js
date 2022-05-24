@@ -49,14 +49,14 @@ const enableValidation = (options) => {
   });
 };
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__text',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'popup__text_type-error',
-  errorClass: 'popup__text-error_active',
-});
+// enableValidation({
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__text',
+//   submitButtonSelector: '.popup__button',
+//   inactiveButtonClass: 'popup__button_inactive',
+//   inputErrorClass: 'popup__text_type-error',
+//   errorClass: 'popup__text-error_active',
+// });
 
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
@@ -69,11 +69,17 @@ function disableButton(buttonElement, inactiveButtonClass) {
   buttonElement.disabled = true;
 }
 
+function enableButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.disabled = false;
+}
+
 function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
     disableButton(buttonElement, inactiveButtonClass);
   } else {
-    buttonElement.classList.remove(inactiveButtonClass);
-    buttonElement.disabled = false;
+    enableButton(buttonElement, inactiveButtonClass);
   }
 }
+
+export { hideInputError, disableButton, enableButton };
