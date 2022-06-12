@@ -1,15 +1,10 @@
-import {
-  openPopup,
-  popupImage,
-  popupImageElement,
-  popupImageDescription,
-} from './utilities/utilities.js';
-
 class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleCardClick) {
     this._src = data.link;
     this._alt = data.name;
     this._templateSelector = templateSelector;
+
+    this.handleCardClick = handleCardClick;
   }
 
   _likeCard() {
@@ -18,14 +13,6 @@ class Card {
 
   _deleteCard() {
     this.buttonDelete.closest(this._templateSelector).remove();
-  }
-
-  _openImagePopup() {
-    popupImageElement.src = this._src;
-    popupImageElement.alt = this._alt;
-    popupImageDescription.textContent = this._alt;
-
-    openPopup(popupImage);
   }
 
   _setEventListeners() {
@@ -40,16 +27,20 @@ class Card {
       this._deleteCard();
     });
 
-    this.cardImage.addEventListener('click', () => {
-      this._openImagePopup();
+    
+    this.cardImage.addEventListener('click', (e) => {
+
+    this.handleCardClick(e);
     });
   }
 
   _createCard() {
     this.cardTemplate = document.querySelector('.card-template').content;
+
     this.cardElement = this.cardTemplate
       .querySelector(this._templateSelector)
       .cloneNode(true);
+
     this.cardImage = this.cardElement.querySelector('.places__img');
 
     this.cardImage.alt = this._alt;
