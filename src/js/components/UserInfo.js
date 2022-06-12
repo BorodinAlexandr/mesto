@@ -1,4 +1,4 @@
-import { nameInput, descriptionInput } from './utilities/utilities';
+import { nameInput, descriptionInput } from '../utilities/utilities';
 
 export default class UserInfo {
   constructor(data) {

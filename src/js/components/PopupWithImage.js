@@ -2,7 +2,7 @@ import Popup from './Popup.js';
 import {
   popupImageElement,
   popupImageDescription,
-} from './utilities/utilities.js';
+} from '../utilities/utilities.js';
 
 export default class PopupWithImage extends Popup {
   constructor(popupSelector) {

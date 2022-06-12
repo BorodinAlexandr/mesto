@@ -1,7 +1,7 @@
 import {
   titleInput,
   linkInput,
-} from './utilities/utilities';
+} from '../utilities/utilities';
 
 export default class Section {
   constructor({ items, renderer }, parentSelector) {

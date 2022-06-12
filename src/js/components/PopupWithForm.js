@@ -1,5 +1,5 @@
 import Popup from './Popup';
-import { titleInput, linkInput } from './utilities/utilities';
+import { titleInput, linkInput } from '../utilities/utilities';
 
 export default class PopupWithForm extends Popup {
   constructor(_popupSelector, submitListener) {
