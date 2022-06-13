@@ -1,7 +1,7 @@
 class Card {
   constructor(data, templateSelector, handleCardClick) {
     this._src = data.link;
-    this._alt = data.name;
+    this._alt = data.title;
     this._templateSelector = templateSelector;
 
     this.handleCardClick = handleCardClick;
@@ -12,13 +12,10 @@ class Card {
   }
 
   _deleteCard() {
-    this.buttonDelete.closest(this._templateSelector).remove();
+    this.buttonDelete.closest('.places__place').remove();
   }
 
   _setEventListeners() {
-    this.buttonLike = this.cardElement.querySelector('.places__like');
-    this.buttonDelete = this.cardElement.querySelector('.places__delete');
-
     this.buttonLike.addEventListener('click', () => {
       this._likeCard();
     });
@@ -27,20 +24,20 @@ class Card {
       this._deleteCard();
     });
 
-    
     this.cardImage.addEventListener('click', (e) => {
-
-    this.handleCardClick(e);
+      this.handleCardClick(e);
     });
   }
 
   _createCard() {
-    this.cardTemplate = document.querySelector('.card-template').content;
+    this.cardTemplate = document.querySelector(this._templateSelector).content;
 
     this.cardElement = this.cardTemplate
-      .querySelector(this._templateSelector)
+      .querySelector('.places__place')
       .cloneNode(true);
 
+    this.buttonLike = this.cardElement.querySelector('.places__like');
+    this.buttonDelete = this.cardElement.querySelector('.places__delete');
     this.cardImage = this.cardElement.querySelector('.places__img');
 
     this.cardImage.alt = this._alt;

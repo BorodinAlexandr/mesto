@@ -1,14 +1,13 @@
 import Popup from './Popup';
-import { titleInput, linkInput } from '../utilities/utilities';
 
 export default class PopupWithForm extends Popup {
-  constructor(_popupSelector, submitListener) {
-    super(_popupSelector);
+  constructor(popupSelector, submitListener) {
+    super();
+    this._popup = document.querySelector(popupSelector);
     this.submitListener = submitListener;
-    this.inputs = this._popupSelector.querySelectorAll('input');
+    this.inputs = this._popup.querySelectorAll('input');
+    this.form = this._popup.querySelector('form');
     this.inputsValue = {};
-    this.titleInput = titleInput;
-    this.linkInput = linkInput;
   }
 
   _getInputValues() {
@@ -19,22 +18,17 @@ export default class PopupWithForm extends Popup {
     return this.inputsValue;
   }
 
-  setEventListeners(e) {
-    this._handleСloseByEscape(e);
-    this._handleCloseByOverlay();
-    this._handleCloseByButton();
+  setEventListeners() {
+    super.setEventListeners();
     this.submitListener();
   }
 
   close() {
-    this._popupSelector.classList.remove('popup_opened');
-    this._getInputValues();
+    super.close();
     this._clearAddCardForm();
-    document.removeEventListener('keyup', this._handleСloseByEscape);
   }
 
   _clearAddCardForm() {
-    this.titleInput.value = '';
-    this.linkInput.value = '';
-  }
+    this.form.reset();
+}
 }

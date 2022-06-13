@@ -1,15 +1,8 @@
-import {
-  titleInput,
-  linkInput,
-} from '../utilities/utilities';
-
 export default class Section {
   constructor({ items, renderer }, parentSelector) {
     this._items = items;
     this._renderer = renderer;
     this._parentSelector = parentSelector;
-    this._titleInput = titleInput;
-    this._linkInput = linkInput;
   }
 
   renderItems() {
@@ -18,11 +11,7 @@ export default class Section {
     });
   }
 
-  addItem() {
-    const card = {
-      name: this._titleInput.value,
-      link: this._linkInput.value,
-    };
+  addItem(card) {
 
     this._renderer(card);
   }

@@ -1,22 +1,22 @@
-import { nameInput, descriptionInput } from '../utilities/utilities';
-
 export default class UserInfo {
   constructor(data) {
-    this.nameSelector = data.name;
-    this.descriptionSelector = data.description;
-    this._nameInput = nameInput;
-    this._descriptionInput = descriptionInput;
+    this.name = document.querySelector(data.name);
+    this.description = document.querySelector(data.description);
+    this.popupProfile = document.querySelector('.popup_edit_profile');
+    this.formElement = this.popupProfile.querySelector('.popup__form_edit_profile');
+    this._nameInput = this.formElement.querySelector('.popup__text_value_name');
+    this._descriptionInput = this.formElement.querySelector('.popup__text_value_descr');
   }
 
   getUserInfo() {
     return {
-      name: this.nameSelector.textContent,
-      description: this.descriptionSelector.textContent,
+      name: this.name.textContent,
+      description: this.description.textContent,
     };
   }
 
   setUserInfo() {
-    this.nameSelector.textContent = this._nameInput.value;
-    this.descriptionSelector.textContent = this._descriptionInput.value;
+    this.name.textContent = this._nameInput.value;
+    this.description.textContent = this._descriptionInput.value;
   }
 }
