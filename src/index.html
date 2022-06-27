@@ -14,7 +14,14 @@
 
     <main class="main">
       <section class="profile">
-        <img class="profile__img" src="<%=require('./images/Avatar.png')%>" alt="Жак-Ив Кусто" />
+        <div class="profile__img-wrapper">
+          <img
+            class="profile__img"
+            src="<%=require('./images/Avatar.png')%>"
+            alt="Жак-Ив Кусто"
+          />
+          <div class="profile__img_hover"></div>
+        </div>
         <div class="profile__person">
           <div class="profile__wrapper">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -89,7 +96,7 @@
               id="place-input"
               placeholder="Название"
               type="text"
-              name="title"
+              name="name"
               class="popup__text popup__text_value_title"
             />
             <span class="popup__text-error place-input-error"></span>
@@ -110,22 +117,68 @@
 
     <div class="popup popup_img">
       <div class="popup__img-container">
-        <img class="popup__image" src="https://cdn.motor1.com/images/mgl/2g9gn/s3/lexus-lf-z-electrified-concept.jpg" alt="заглушка" />
+        <img
+          class="popup__image"
+          src="https://cdn.motor1.com/images/mgl/2g9gn/s3/lexus-lf-z-electrified-concept.jpg"
+          alt="заглушка"
+        />
         <button type="button" class="popup__close"></button>
         <p class="popup__img-descr">заглушка</p>
       </div>
     </div>
 
+    <div class="popup popup__delete">
+      <div class="popup__container">
+        <h2 class="popup__title popup__title_delete">Вы уверены?</h2>
+        <button type="button" class="popup__close"></button>
+        <form name="delete-card" action="#" class="popup__form">
+          <button type="submit" class="popup__button">Да</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_edit_photo">
+      <div class="popup__container">
+        <button type="button" class="popup__close"></button>
+        <form
+          novalidate
+          name="change-photo"
+          action="#"
+          class="popup__form popup__form_change-photo"
+        >
+          <fieldset class="popup__fieldset">
+            <h2 class="popup__title">Обновить аватар</h2>
+            <input
+              required
+              id="link-input"
+              placeholder="Ссылка на картинку"
+              type="url"
+              name="link"
+              class="popup__text popup__text_value_link"
+            />
+            <span class="popup__text-error link-input-error"></span>
+            <button type="submit" class="popup__button">Сохранить</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
     <template class="card-template">
       <div class="places__place">
-        <button type="button" class="places__delete"></button>
-        <img class="places__img" src="https://cdn.motor1.com/images/mgl/2g9gn/s3/lexus-lf-z-electrified-concept.jpg" alt="заглушка" />
+        <button type="button" class="places__delete" data-id="100"></button>
+        <img
+          class="places__img"
+          src="https://cdn.motor1.com/images/mgl/2g9gn/s3/lexus-lf-z-electrified-concept.jpg"
+          alt="заглушка"
+        />
         <div class="places__text">
           <h3 class="places__name">заглушка</h3>
-          <button type="button" class="places__like"></button>
+          <div class="places__like-wrapper">
+            <button type="button" class="places__like"></button>
+            <p class="places__like-counter">0</p>
+          </div>
         </div>
       </div>
     </template>
-
   </body>
 </html>

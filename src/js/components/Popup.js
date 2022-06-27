@@ -20,10 +20,9 @@ export default class Popup {
   }
 
   _handleСloseByEscape(e) {
-        if (e.code === 'Escape') {
-            this.close();
+    if (e.code === 'Escape') {
+      this.close();
     }
-
   }
 
   _handleCloseByOverlay() {
