@@ -35,7 +35,7 @@ const api = new Api({
 });
 
 const buttonOpenProfile = document.querySelector('.profile__edit'),
-  buttonEditPhoto = document.querySelector('.profile__img_hover'),
+  buttonEditPhoto = document.querySelector('.profile__img-hover'),
   cardOpenButton = document.querySelector('.profile__button');
 
 const popupWithImage = new PopupWithImage('.popup_img');
