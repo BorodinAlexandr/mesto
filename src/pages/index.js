@@ -11,10 +11,10 @@ import './index.css';
 import { nameInput, descriptionInput } from '../js/utilities/utilities.js';
 import Api from '../js/components/Api';
 
-const popupDelete = new PopupDelete('.popup__delete', (e) => {
+const popupDelete = new PopupDelete('.popup_delete', (e) => {
   e.preventDefault();
   const id = document
-    .querySelector('.popup__delete .popup__button')
+    .querySelector('.popup_delete .popup__button')
     .getAttribute('data-id');
 
   api.deleteCard(id);
@@ -97,8 +97,7 @@ const popupCards = new PopupWithForm('.popup_edit_cards', (e) => {
 
   section.addItem(data);
 
-  api.postNewCard(popupCards.getInputValues())
-  .then(res => {
+  api.postNewCard(popupCards.getInputValues()).then((res) => {
     document.querySelector('.places__like').setAttribute('data-id', res._id);
     document.querySelector('.places__delete').setAttribute('data-id', res._id);
   });

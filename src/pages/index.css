@@ -6,7 +6,7 @@
 @import '../blocks/profile/profile.css';
 @import '../blocks/profile/__img-wrapper/profile__img-wrapper.css';
 @import '../blocks/profile/__img/profile__img.css';
-@import '../blocks/profile/__img/_hover/profile__img_hover.css';
+@import '../blocks/profile/__img-hover/profile__img-hover.css';
 @import '../blocks/profile/__person/profile__person.css';
 @import '../blocks/profile/__wrapper/profile__wrapper.css';
 @import '../blocks/profile/__name/profile__name.css';
