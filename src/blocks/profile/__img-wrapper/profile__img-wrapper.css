@@ -2,6 +2,6 @@
   position: relative;
 }
 
-.profile__img-wrapper:hover .profile__img_hover {
+.profile__img-wrapper:hover .profile__img-hover {
   display: block;
 }
