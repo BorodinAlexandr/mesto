@@ -126,7 +126,6 @@ const popupPhoto = new PopupWithForm('.popup_edit_photo', (e) => {
 
   const data = popupPhoto.getInputValues();
 
-  console.log(data);
   api.sendProfilePhoto(data.link);
   userInfo.setUserInfo({ avatar: data.link });
 
@@ -172,7 +171,6 @@ buttonEditPhoto.addEventListener('click', () => {
 });
 
 api.getUserInfo().then((res) => {
-  console.log(res);
   userInfo.setUserInfo({
     name: res.name,
     descr: res.about,
