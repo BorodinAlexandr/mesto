@@ -1,26 +1,25 @@
 class FormValidator {
-  constructor(options, formSelector) {
+  constructor(options, form) {
     this.options = options;
     this.inputSelector = this.options.inputSelector;
     this.submitButtonSelector = this.options.submitButtonSelector;
     this.inactiveButtonClass = this.options.inactiveButtonClass;
     this.inputErrorClass = this.options.inputErrorClass;
     this.errorClass = this.options.errorClass;
-    this.formSelector = formSelector;
-    this.formElement = document.querySelector(this.formSelector);
-    this.buttonElement = this.formElement.querySelector(this.submitButtonSelector);
-    this.inputList = Array.from(this.formElement.querySelectorAll(this.inputSelector));
+    this.form = form;
+    this.buttonElement = this.form.querySelector(this.submitButtonSelector);
+    this.inputList = Array.from(this.form.querySelectorAll(this.inputSelector));
   }
 
   _showInputError(inputElement, errorMessage) {
-    const errorElement = this.formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this.form.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(this.inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this.errorClass);
   }
 
   hideInputError(inputElement) {
-    const errorElement = this.formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this.form.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(this.inputErrorClass);
     errorElement.classList.remove(this.errorClass);
     errorElement.textContent = '';
@@ -48,9 +47,6 @@ class FormValidator {
   }
 
   enableValidation() {
-    this.formElement.addEventListener('submit', function (e) {
-      e.preventDefault();
-    });
     this._setEventListeners();
   }
 

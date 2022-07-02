@@ -2,38 +2,30 @@ export default class Api {
   constructor(options) {
     this.url = options.url;
     this.headers = options.headers;
+    this._getResponseData = this._getResponseData.bind(this);
+  }
+
+  _getResponseData(res) {
+    if (!res.ok) {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
   }
 
   getUserInfo() {
     return fetch(`${this.url}/users/me`, {
       headers: this.headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
   }
 
   getInitialCards() {
     return fetch(`${this.url}/cards`, {
       headers: this.headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
   }
 
   sendProfileInfo(setName, setAbout) {
@@ -44,17 +36,9 @@ export default class Api {
         name: setName,
         about: setAbout,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
   }
 
   sendProfilePhoto(setPhoto) {
@@ -65,15 +49,8 @@ export default class Api {
         avatar: setPhoto,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    .then((res) => {
+        return this._getResponseData(res);
       });
   }
 
@@ -86,15 +63,8 @@ export default class Api {
         link: link,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    .then((res) => {
+        return this._getResponseData(res);
       });
   }
 
@@ -103,15 +73,8 @@ export default class Api {
       method: 'DELETE',
       headers: this.headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    .then((res) => {
+        return this._getResponseData(res);
       });
   }
 
@@ -120,15 +83,8 @@ export default class Api {
       method: 'PUT',
       headers: this.headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    .then((res) => {
+        return this._getResponseData(res);
       });
   }
 
@@ -137,15 +93,8 @@ export default class Api {
       method: 'DELETE',
       headers: this.headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    .then((res) => {
+        return this._getResponseData(res);
       });
   }
 }

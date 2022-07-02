@@ -39,9 +39,17 @@ export default class PopupWithForm extends Popup {
 
   open() {
     super.open();
-    this.submitButton.textContent = this.buttonText;
   }
+
   _resetForm() {
     this.form.reset();
+  }
+
+  setErrorText() {
+    this.submitButton.textContent = 'Что-то пошло не так...';
+  }
+
+  setDefaultText() {
+    this.submitButton.textContent = this.buttonText;
   }
 }

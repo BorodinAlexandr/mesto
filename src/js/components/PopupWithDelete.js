@@ -4,16 +4,24 @@ export default class PopupDelete extends Popup {
   constructor(popupSelector, handleDeleteCard) {
     super(popupSelector);
     this.handleDeleteCard = handleDeleteCard;
+    this.submitButton = this._popup.querySelector('.popup__button');
+    this.buttonText = this.submitButton.textContent;
     this.form = this._popup.querySelector('form');
     this.submitButton = this.form.querySelector('button');
   }
 
-  open(e) {
+  deleteCardFromPage() {
+    this.element = document.querySelector(
+      `.places__place[data-id="${this.id}"]`
+    );
+    this.element.remove();
+  }
+
+  open(data) {
     super.open();
 
-    const id = e.target.getAttribute('data-id');
-
-    this.submitButton.setAttribute('data-id', id);
+    this.id = data._id;
+    this.submitButton.setAttribute('data-id', this.id);
   }
 
   setEventListeners() {
@@ -23,7 +31,16 @@ export default class PopupDelete extends Popup {
 
   deleteCard() {
     this.form.addEventListener('submit', (e) => {
-      this.handleDeleteCard(e);
+      this.submitButton.textContent = 'Удаление...';
+      this.handleDeleteCard(e, this.id);
     });
+  }
+
+  setErrorText() {
+    this.submitButton.textContent = 'Что-то пошло не так...';
+  }
+
+  setDefaultText() {
+    this.submitButton.textContent = this.buttonText;
   }
 }
