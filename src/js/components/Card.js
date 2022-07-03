@@ -6,7 +6,8 @@ class Card {
     handleCardClick,
     handleOpenPopup,
     handleLikeCard,
-    handleDeleteLikeCard
+    handleDeleteLikeCard,
+    handleDeleteCard
   ) {
     this._src = data.link;
     this._alt = data.name;
@@ -21,17 +22,33 @@ class Card {
     this.handleOpenPopup = handleOpenPopup;
     this.handleLikeCard = handleLikeCard;
     this.handleDeleteLikeCard = handleDeleteLikeCard;
+    this.handleDeleteCard = handleDeleteCard;
+    this.deleteCard = this.deleteCard.bind(this);
   }
 
-  deleteLike() {
+  _updateLikesView() {
+    this.likeCounter.textContent = this.likes.length;
+    if (this._isLiked()) {
+        this._addLike();
+    } else {
+        this._deleteLike();
+    }
+  }  
+
+  setLikes(likes) {
+    this.likes = likes;
+    this._updateLikesView();
+  } 
+
+  _deleteLike() {
     this.buttonLike.classList.remove('places__like_active');
   }
 
-  addLike() {
+  _addLike() {
     this.buttonLike.classList.add('places__like_active');
   }
 
-  setLike() {
+  _setLike() {
     if (this.buttonLike.classList.contains('places__like_active')) {
       this.handleDeleteLikeCard();
     } else {
@@ -39,19 +56,17 @@ class Card {
     }
   }
 
-  setLikeCounter(res) {
-    this.likeCounter.textContent = res.likes.length;
+  _isLiked() {
+    return this.likes.some((like) => like._id === this.userId);
   }
 
-  addInitialLike() {
-    this.likes.forEach((item) => {
-      if (item._id === this.userId) {
-        this.addLike();
-      }
-    });
+  _addInitialLike() {
+    if (this._isLiked()) {
+      this._addLike();
+    }
   }
 
-  showDeleteButton() {
+  _showDeleteButton() {
     if (this.cardOwnerId === this.userId) {
       this.buttonDelete.classList.remove('places__delete_hidden');
     }
@@ -59,11 +74,12 @@ class Card {
 
   _setEventListeners() {
     this.buttonLike.addEventListener('click', () => {
-      this.setLike();
+      this._setLike();
     });
 
     this.buttonDelete.addEventListener('click', () => {
       this.handleOpenPopup();
+      this.handleDeleteCard();
     });
 
     this.cardImage.addEventListener('click', () => {
@@ -90,8 +106,12 @@ class Card {
     this.cardImage.alt = this._alt;
     this.cardImage.src = this._src;
     this.cardElement.querySelector('.places__name').textContent = this._alt;
-    this.showDeleteButton();
-    this.addInitialLike();
+    this._showDeleteButton();
+    this._addInitialLike();
+  }
+
+  deleteCard() {
+    this.cardElement.remove();
   }
 
   getCard() {

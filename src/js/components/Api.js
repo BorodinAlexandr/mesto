@@ -2,7 +2,6 @@ export default class Api {
   constructor(options) {
     this.url = options.url;
     this.headers = options.headers;
-    this._getResponseData = this._getResponseData.bind(this);
   }
 
   _getResponseData(res) {

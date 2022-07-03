@@ -1,5 +1,5 @@
 import validatorSettings from '../js/utilities/constants.js';
-import PopupDelete from '../js/components/PopupWithDelete';
+import PopupWithConfirmation from '../js/components/PopupWithConfirmation';
 import PopupWithImage from '../js/components/PopupWithImage.js';
 import PopupWithForm from '../js/components/PopupWithForm.js';
 import Card from '../js/components/Card.js';
@@ -10,22 +10,18 @@ import './index.css';
 import { nameInput, descriptionInput } from '../js/utilities/utilities.js';
 import Api from '../js/components/Api';
 
-const popupDelete = new PopupDelete('.popup_delete', (e, id) => {
+const popupDelete = new PopupWithConfirmation('.popup_delete', (e, id) => {
   e.preventDefault();
 
   api
     .deleteCard(id)
     .then((res) => {
       console.log(res);
-      popupDelete.deleteCardFromPage();
       popupDelete.close();
     })
     .catch((err) => {
       console.log(err);
       popupDelete.setErrorText();
-    })
-    .finally(() => {
-      popupDelete.setDefaultText();
     });
 });
 popupDelete.setEventListeners();
@@ -78,16 +74,27 @@ function createNewCard(item) {
       popupDelete.open(item);
     },
     () => {
-      api.likeCard(item._id).then((res) => {
-        card.setLikeCounter(res);
-        card.addLike();
-      });
+      api
+        .likeCard(item._id)
+        .then((res) => {
+            card.setLikes(res.likes);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     () => {
-      api.deleteLikeCard(item._id).then((res) => {
-        card.setLikeCounter(res);
-        card.deleteLike();
-      });
+      api
+        .deleteLikeCard(item._id)
+        .then((res) => {
+            card.setLikes(res.likes);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    () => {
+      popupDelete.formListener(card.deleteCard);
     }
   );
 
@@ -102,19 +109,6 @@ const section = new Section(
   },
   '.places'
 );
-
-// api.getInitialCards().then((res) => {
-//   section.renderItems(res);
-// });
-
-// api.getUserInfo().then((res) => {
-//   id = res._id;
-//   userInfo.setUserInfo({
-//     name: res.name,
-//     descr: res.about,
-//     avatar: res.avatar,
-//   });
-// });
 
 const userInfo = new UserInfo({
   name: '.profile__name',
@@ -138,9 +132,6 @@ const popupCards = new PopupWithForm('.popup_edit_cards', (e) => {
     .catch((err) => {
       console.log(err);
       popupCards.setErrorText();
-    })
-    .finally(() => {
-      popupCards.setDefaultText();
     });
 });
 
@@ -160,9 +151,6 @@ const popupProfile = new PopupWithForm('.popup_edit_profile', (e) => {
     .catch((err) => {
       console.log(err);
       popupProfile.setErrorText();
-    })
-    .finally(() => {
-      popupProfile.setDefaultText();
     });
 });
 
@@ -176,16 +164,12 @@ const popupPhoto = new PopupWithForm('.popup_edit_photo', (e) => {
   api
     .sendProfilePhoto(data.link)
     .then((res) => {
-      console.log(res);
       userInfo.setUserInfo({ avatar: res.avatar });
       popupPhoto.close();
     })
     .catch((err) => {
       console.log(err);
       popupPhoto.setErrorText();
-    })
-    .finally(() => {
-      popupPhoto.setDefaultText();
     });
 });
 
@@ -220,24 +204,3 @@ buttonEditPhoto.addEventListener('click', () => {
 
   popupPhoto.open();
 });
-
-// api.getInitialCards().then((res) => {
-//   res.forEach((place) => {
-//     section.addItem(place);
-
-//     if (place.owner._id != 'd968ca5e3c22cb5f2b0c5cec') {
-//       const buttonDelete = document.querySelector('.places__delete');
-//       buttonDelete.classList.add('places__delete_hidden');
-//     }
-
-//     place.likes.forEach((item) => {
-//       if (item._id == 'd968ca5e3c22cb5f2b0c5cec') {
-//         const like = document.querySelector('.places__like');
-//         like.classList.add('places__like_active');
-//       }
-//     });
-
-//     const like = document.querySelector('.places__like-counter');
-//     like.textContent = place.likes.length;
-//   });
-// });

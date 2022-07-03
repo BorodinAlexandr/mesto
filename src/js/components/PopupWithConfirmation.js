@@ -1,24 +1,18 @@
 import Popup from './Popup';
 
-export default class PopupDelete extends Popup {
+export default class PopupWithConfirmation extends Popup {
   constructor(popupSelector, handleDeleteCard) {
     super(popupSelector);
-    this.handleDeleteCard = handleDeleteCard;
     this.submitButton = this._popup.querySelector('.popup__button');
     this.buttonText = this.submitButton.textContent;
     this.form = this._popup.querySelector('form');
     this.submitButton = this.form.querySelector('button');
-  }
-
-  deleteCardFromPage() {
-    this.element = document.querySelector(
-      `.places__place[data-id="${this.id}"]`
-    );
-    this.element.remove();
+    this.handleDeleteCard = handleDeleteCard;
   }
 
   open(data) {
     super.open();
+    this.setDefaultText();
 
     this.id = data._id;
     this.submitButton.setAttribute('data-id', this.id);
@@ -26,11 +20,11 @@ export default class PopupDelete extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this.deleteCard();
   }
 
-  deleteCard() {
+  formListener(callback) {
     this.form.addEventListener('submit', (e) => {
+      callback();
       this.submitButton.textContent = 'Удаление...';
       this.handleDeleteCard(e, this.id);
     });

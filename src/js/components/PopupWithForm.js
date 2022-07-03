@@ -39,6 +39,7 @@ export default class PopupWithForm extends Popup {
 
   open() {
     super.open();
+    this.setDefaultText();
   }
 
   _resetForm() {
