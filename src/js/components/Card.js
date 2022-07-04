@@ -4,10 +4,9 @@ class Card {
     data,
     templateSelector,
     handleCardClick,
-    handleOpenPopup,
+    handleDeleteCard,
     handleLikeCard,
     handleDeleteLikeCard,
-    handleDeleteCard
   ) {
     this._src = data.link;
     this._alt = data.name;
@@ -19,10 +18,9 @@ class Card {
     this._templateSelector = templateSelector;
 
     this.handleCardClick = handleCardClick;
-    this.handleOpenPopup = handleOpenPopup;
+    this.handleDeleteCard = handleDeleteCard;
     this.handleLikeCard = handleLikeCard;
     this.handleDeleteLikeCard = handleDeleteLikeCard;
-    this.handleDeleteCard = handleDeleteCard;
     this.deleteCard = this.deleteCard.bind(this);
   }
 
@@ -78,8 +76,7 @@ class Card {
     });
 
     this.buttonDelete.addEventListener('click', () => {
-      this.handleOpenPopup();
-      this.handleDeleteCard();
+        this.handleDeleteCard();
     });
 
     this.cardImage.addEventListener('click', () => {

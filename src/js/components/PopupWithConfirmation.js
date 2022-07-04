@@ -10,28 +10,18 @@ export default class PopupWithConfirmation extends Popup {
     this.handleDeleteCard = handleDeleteCard;
   }
 
-  open(data) {
+  open(card) {
     super.open();
-    this.setDefaultText();
-
-    this.id = data._id;
-    this.submitButton.setAttribute('data-id', this.id);
-  }
+    this._card = card;
+  } 
 
   setEventListeners() {
     super.setEventListeners();
-  }
-
-  formListener(callback) {
     this.form.addEventListener('submit', (e) => {
-      callback();
-      this.submitButton.textContent = 'Удаление...';
-      this.handleDeleteCard(e, this.id);
-    });
-  }
-
-  setErrorText() {
-    this.submitButton.textContent = 'Что-то пошло не так...';
+        e.preventDefault();
+        this.submitButton.textContent = 'Удаление...';
+        this.handleDeleteCard(this._card.id, this._card);
+      });
   }
 
   setDefaultText() {

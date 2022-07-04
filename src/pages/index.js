@@ -10,18 +10,18 @@ import './index.css';
 import { nameInput, descriptionInput } from '../js/utilities/utilities.js';
 import Api from '../js/components/Api';
 
-const popupDelete = new PopupWithConfirmation('.popup_delete', (e, id) => {
-  e.preventDefault();
-
+const popupDelete = new PopupWithConfirmation('.popup_delete', (id, card) => {
   api
     .deleteCard(id)
     .then((res) => {
-      console.log(res);
       popupDelete.close();
+      card.deleteCard();
     })
     .catch((err) => {
       console.log(err);
-      popupDelete.setErrorText();
+    })
+    .finally(() => {
+      popupDelete.setDefaultText();
     });
 });
 popupDelete.setEventListeners();
@@ -71,13 +71,13 @@ function createNewCard(item) {
       popupWithImage.open(item);
     },
     () => {
-      popupDelete.open(item);
+      popupDelete.open(card);
     },
     () => {
       api
         .likeCard(item._id)
         .then((res) => {
-            card.setLikes(res.likes);
+          card.setLikes(res.likes);
         })
         .catch((err) => {
           console.log(err);
@@ -87,7 +87,7 @@ function createNewCard(item) {
       api
         .deleteLikeCard(item._id)
         .then((res) => {
-            card.setLikes(res.likes);
+          card.setLikes(res.likes);
         })
         .catch((err) => {
           console.log(err);
@@ -131,7 +131,9 @@ const popupCards = new PopupWithForm('.popup_edit_cards', (e) => {
     })
     .catch((err) => {
       console.log(err);
-      popupCards.setErrorText();
+    })
+    .finally(() => {
+      popupCards.setDefaultText();
     });
 });
 
@@ -150,7 +152,9 @@ const popupProfile = new PopupWithForm('.popup_edit_profile', (e) => {
     })
     .catch((err) => {
       console.log(err);
-      popupProfile.setErrorText();
+    })
+    .finally(() => {
+      popupProfile.setDefaultText();
     });
 });
 
